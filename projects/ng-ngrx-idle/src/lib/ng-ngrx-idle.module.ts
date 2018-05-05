@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { NgNgrxIdleComponent } from './ng-ngrx-idle.component';
+import { StoreModule } from '@ngrx/store';
+
+import { ngNgrxIdleReducer } from './state/ng-ngrx-idle.reducer';
 
 @NgModule({
-  imports: [
-  ],
-  declarations: [NgNgrxIdleComponent],
-  exports: [NgNgrxIdleComponent]
+  imports: [StoreModule.forRoot({ ngNgrxIdle: ngNgrxIdleReducer })]
 })
-export class NgNgrxIdleModule { }
+export class NgNgrxIdleModule {}
