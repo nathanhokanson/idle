@@ -116,6 +116,46 @@
           }
         }
       }
+    },
+    "ng-ngrx-idle": {
+      "root": "projects/ng-ngrx-idle",
+      "sourceRoot": "projects/ng-ngrx-idle/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-ngrx-idle/tsconfig.lib.json",
+            "project": "projects/ng-ngrx-idle/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ng-ngrx-idle/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-ngrx-idle/src/test.ts",
+            "tsConfig": "projects/ng-ngrx-idle/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-ngrx-idle/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-ngrx-idle/tsconfig.lib.json",
+              "projects/ng-ngrx-idle/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "idle"
