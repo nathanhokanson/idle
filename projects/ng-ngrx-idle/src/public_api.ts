@@ -3,3 +3,4 @@
  */
 
 export * from './lib/ng-ngrx-idle.module';
+export { NgNgrxIdleDirective } from './lib/ng-ngrx-idle.directive';
