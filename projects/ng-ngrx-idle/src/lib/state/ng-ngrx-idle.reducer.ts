@@ -6,8 +6,9 @@ export const ngNgrxIdleReducer: ActionReducer<NgNgrxIdleState> = (
   state = initialState,
   action: Action
 ) => {
+  console.log('ngNgrxIdleReducer got an action', action);
   return {
     ...state,
-    lastAccessed: moment()
+    _ngNgrxIdle_lastAccessed: moment()
   };
 };

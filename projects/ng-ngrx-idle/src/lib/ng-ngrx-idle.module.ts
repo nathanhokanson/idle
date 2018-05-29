@@ -5,7 +5,7 @@ import { ngNgrxIdleReducer } from './state/ng-ngrx-idle.reducer';
 import { NgNgrxIdleDirective } from './ng-ngrx-idle.directive';
 
 @NgModule({
-  imports: [StoreModule.forRoot({ ngNgrxIdle: ngNgrxIdleReducer })],
+  imports: [StoreModule.forFeature('libNgNgrxIdle', ngNgrxIdleReducer)],
   exports: [NgNgrxIdleDirective],
   declarations: [NgNgrxIdleDirective]
 })

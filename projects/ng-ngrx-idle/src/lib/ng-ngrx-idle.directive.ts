@@ -4,7 +4,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  Renderer2
+  Renderer2,
+  OnInit
 } from '@angular/core';
 import { Observable, Subscription, timer } from 'rxjs';
 import { NgNgrxIdleState } from './state/ng-ngrx-idle.state';
@@ -16,7 +17,7 @@ const MILLIS = 1000;
 @Directive({
   selector: '[libNgNgrxIdle]'
 })
-export class NgNgrxIdleDirective implements OnChanges {
+export class NgNgrxIdleDirective implements OnChanges, OnInit {
   @Input() interval = 20;
   @Input() idle = 10;
   @Output() timedOut: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -24,14 +25,15 @@ export class NgNgrxIdleDirective implements OnChanges {
   private timeoutSubscription: Subscription;
   private logoutSubscription: Subscription;
   private listener: Function;
-  private state: NgNgrxIdleState;
+  private lastAccessed: any;
   private intervalCheck: number = this.interval * MILLIS;
 
-  constructor(
-    private store: Store<NgNgrxIdleState>,
-    private renderer: Renderer2
-  ) {
-    store.select('lastAccessed').subscribe((state: NgNgrxIdleState) => {
+  constructor(private store: Store<any>, private renderer: Renderer2) {}
+
+  ngOnInit() {
+    this.store.select('libNgNgrxIdle').subscribe((state: any) => {
+      console.log('got a state change in the directive', state);
+      this.lastAccessed = state ? state._ngNgrxIdle_lastAccessed : undefined;
       if (this.timeoutSubscription) {
         this.timeoutSubscription.unsubscribe();
         this.timeoutSubscription = undefined;
@@ -40,6 +42,8 @@ export class NgNgrxIdleDirective implements OnChanges {
         this.setTimeoutSubscription();
       }
     });
+
+    this.store.dispatch({ type: 'libNgrxIdle-noop' });
   }
 
   ngOnChanges(changes) {
@@ -53,7 +57,9 @@ export class NgNgrxIdleDirective implements OnChanges {
       this.intervalCheck,
       this.intervalCheck
     ).subscribe(() => {
-      const diff = moment().diff(this.state.lastAccessed);
+      console.log('lastAccessed', this.lastAccessed);
+      const diff = moment().diff(this.lastAccessed);
+      console.log('diff', diff);
       if (diff > this.intervalCheck) {
         this.listener = this.renderer.listen(
           'document',
