@@ -1,14 +1,15 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { initialState, NgNgrxIdleState } from './ng-ngrx-idle.state';
-import * as moment from 'moment';
+import * as moment_ from 'moment';
 
-export const ngNgrxIdleReducer: ActionReducer<NgNgrxIdleState> = (
+const moment = moment_;
+
+export function ngNgrxIdleReducer(
   state = initialState,
   action: Action
-) => {
-  console.log('ngNgrxIdleReducer got an action', action);
+): NgNgrxIdleState {
   return {
     ...state,
     _ngNgrxIdle_lastAccessed: moment()
   };
-};
+}

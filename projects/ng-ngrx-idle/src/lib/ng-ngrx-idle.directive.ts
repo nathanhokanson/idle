@@ -10,7 +10,9 @@ import {
 import { Observable, Subscription, timer } from 'rxjs';
 import { NgNgrxIdleState } from './state/ng-ngrx-idle.state';
 import { Store } from '@ngrx/store';
-import * as moment from 'moment';
+import * as moment_ from 'moment';
+
+const moment = moment_;
 
 const MILLIS = 1000;
 
